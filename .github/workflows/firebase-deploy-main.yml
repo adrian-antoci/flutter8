@@ -1,4 +1,4 @@
-name: Prod - Build and deploy to Firebase
+name: Build and deploy to Firebase Hosting
 on:
   push:
     branches:
