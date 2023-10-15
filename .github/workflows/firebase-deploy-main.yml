@@ -5,14 +5,14 @@ on:
       - main
 jobs:
   prepare:
-    - name: Create env file
-      run: |
-        rm env/default.env
-        touch env/default.env
-        echo ${ENV_FILE} >> env/default.env
-        cat env/default.env
-      env:
-        ENV_FILE: ${{ secrets.ENV_FILE }}
+    name: Create env file
+    run: |
+      rm env/default.env
+      touch env/default.env
+      echo ${ENV_FILE} >> env/default.env
+      cat env/default.env
+    env:
+      ENV_FILE: ${{ secrets.ENV_FILE }}
 
   build:
     name: Build and deploy
