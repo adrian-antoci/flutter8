@@ -13,12 +13,12 @@ jobs:
       - run: |
           rm env/default.env
           touch env/default.env
-          echo -e ${ENV_FILE} >> env/default.env
+          echo "${ENV_FILE}" >> env/default.env
         env:
           ENV_FILE: ${{ secrets.ENV_FILE }}
       - run: |
           touch firebase.json
-          echo -e ${FIREBASE_HOSTING_FILE} >> firebase.json
+          echo "${FIREBASE_HOSTING_FILE}" >> firebase.json
         env:
           FIREBASE_HOSTING_FILE: ${{ secrets.FIREBASE_HOSTING_FILE }}
       - run: flutter config --enable-web
