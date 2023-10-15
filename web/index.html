@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <base href="$FLUTTER_BASE_HREF">
+
+    <meta charset="UTF-8">
+    <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+    <meta name="description" content="Flutter8 is amazing">
+
+    <!-- iOS meta tags & icons -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Flutter8">
+    <link rel="apple-touch-icon" href="icons/Icon-192.png">
+    <meta name="theme-color" content="#2b2d30">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png"/>
+
+    <title>Flutter8</title>
+    <link rel="manifest" href="manifest.json">
+    <script>
+        self.FIREBASE_APPCHECK_DEBUG_TOKEN = "a3ee0ba2-984e-456f-9b15-3e5547cdbef5";
+
+    </script>
+    <script>
+    // The value below is injected by flutter build, do not touch.
+    const serviceWorkerVersion = null;
+
+    </script>
+    <!-- This script adds the flutter initialization JS code -->
+    <script src="flutter.js" defer></script>
+</head>
+<body style="height: 100vh;
+    background: black;
+    position: fixed;
+    inset: 0px;
+    overflow: hidden;
+    padding: 0px;
+    margin: 0px;
+    user-select: none;
+    touch-action: none;">
+<div style="margin: auto;
+    text-align: center;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 400px">
+    <img src="./icons/logo.svg"/>
+</div>
+<script>
+    window.addEventListener('load', function(ev) {
+      // Download main.dart.js
+      _flutter.loader.loadEntrypoint({
+        serviceWorker: {
+          serviceWorkerVersion: serviceWorkerVersion,
+        },
+        onEntrypointLoaded: function(engineInitializer) {
+          engineInitializer.initializeEngine().then(function(appRunner) {
+            appRunner.runApp();
+          });
+        }
+      });
+    });
+
+</script>
+</body>
+</html>
