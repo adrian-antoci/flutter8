@@ -1,0 +1,35 @@
+name: Prod - Build and deploy to Firebase
+on:
+  push:
+    branches:
+      - main
+jobs:
+  prepare:
+    - name: Create env file
+      run: |
+        rm env/default.env
+        touch env/default.env
+        echo ${ENV_FILE} >> env/default.env
+        cat env/default.env
+      env:
+        ENV_FILE: ${{ secrets.ENV_FILE }}
+
+  build:
+    name: Build and deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: subosito/flutter-action@v2.10.0
+        with:
+          flutter-version: '3.13.0-0.3.pre'
+          channel: 'beta'
+      - run: flutter config --enable-web
+      - run: flutter pub get
+      - run: flutter build web -t lib/main.dart
+      - run: cp -r ./assets ./build/web
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_FLUTTER8_PROD }}'
+          channelId: live
+          projectId: flutter8-prod
