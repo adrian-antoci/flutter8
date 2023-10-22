@@ -4,9 +4,12 @@ import 'package:flutter8/theme/buttons.dart';
 import 'package:flutter8/theme/responsive.dart';
 import 'package:flutter8/theme/spacers.dart';
 import 'package:flutter8/theme/text.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class WelcomeScreenWidget extends StatefulWidget {
   const WelcomeScreenWidget({super.key});
@@ -68,22 +71,11 @@ class _WelcomeScreenWidgetState extends State<WelcomeScreenWidget> {
       text: TextSpan(
         style: normalStye,
         children: <TextSpan>[
-          const TextSpan(text: 'Hi! By clicking Continue, you agree to our '),
+          const TextSpan(text: 'Hi! By clicking Continue, you agree that have read and agree with our '),
           TextSpan(
-              text: 'Terms of Service',
+              text: 'Terms and Privacy Policy',
               style: linkStyle,
-              recognizer: TapGestureRecognizer()
-                ..onTap = () {
-                  print('Terms of Service"');
-                }),
-          const TextSpan(text: ' and that you have read our '),
-          TextSpan(
-              text: 'Privacy Policy',
-              style: linkStyle,
-              recognizer: TapGestureRecognizer()
-                ..onTap = () {
-                  print('Privacy Policy"');
-                }),
+              recognizer: TapGestureRecognizer()..onTap = () => launchUrlString(dotenv.env['POLICY_URL']!)),
           const TextSpan(text: '.'),
         ],
       ),
