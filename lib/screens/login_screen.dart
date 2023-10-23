@@ -72,7 +72,7 @@ class _LoginScreenWidgetState extends State<LoginScreenWidget> {
               const TitleText("Sign up to Flutter8"),
               const Spacer1(),
               const Spacer1(),
-              _termsWidget(context),
+              const Text("To create a post you must signup."),
               const Spacer2(),
               ElevatedLoadingButton(
                 onPressed: () => _googleSignIn.signIn(),
@@ -84,45 +84,6 @@ class _LoginScreenWidgetState extends State<LoginScreenWidget> {
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _termsWidget(BuildContext context) {
-    TextStyle linkStyle = const TextStyle(color: Colors.pinkAccent);
-    TextStyle normalStye = const TextStyle(color: Colors.white, height: 1.3);
-    return RichText(
-      textAlign: TextAlign.center,
-      text: TextSpan(
-        style: normalStye,
-        children: <TextSpan>[
-          const TextSpan(
-              text: 'To create a post you must signup.\n\nBy clicking \'Continue with Google\', you agree to our '),
-          TextSpan(
-              text: 'Terms of Service',
-              style: linkStyle,
-              recognizer: TapGestureRecognizer()
-                ..onTap = () {
-                  print('Terms of Service"');
-                }),
-          const TextSpan(text: ' and that you have read our '),
-          TextSpan(
-              text: 'Privacy Policy',
-              style: linkStyle,
-              recognizer: TapGestureRecognizer()
-                ..onTap = () {
-                  print('Privacy Policy"');
-                }),
-          const TextSpan(text: ', and '),
-          TextSpan(
-              text: 'Community Guidelines',
-              style: linkStyle,
-              recognizer: TapGestureRecognizer()
-                ..onTap = () {
-                  print('Privacy Policy"');
-                }),
-          const TextSpan(text: '.'),
-        ],
       ),
     );
   }
