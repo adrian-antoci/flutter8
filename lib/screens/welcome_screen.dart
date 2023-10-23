@@ -73,9 +73,9 @@ class _WelcomeScreenWidgetState extends State<WelcomeScreenWidget> {
         children: <TextSpan>[
           const TextSpan(text: 'Hi! By clicking Continue, you agree that have read and agree with our '),
           TextSpan(
-              text: 'Terms and Privacy Policy',
+              text: 'Privacy Policy',
               style: linkStyle,
-              recognizer: TapGestureRecognizer()..onTap = () => launchUrlString(dotenv.env['POLICY_URL']!)),
+              recognizer: TapGestureRecognizer()..onTap = () => launchUrlString(dotenv.env['PRIVACY_POLICY_URL']!)),
           const TextSpan(text: '.'),
         ],
       ),
