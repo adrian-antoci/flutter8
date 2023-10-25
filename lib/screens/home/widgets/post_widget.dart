@@ -30,14 +30,20 @@ class PostCardWidget extends StatelessWidget {
                 Row(
                   children: [
                     Container(
-                      width: 50,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                        image: DecorationImage(image: NetworkImage(post.createdByAvatar), fit: BoxFit.cover),
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                    ),
+                        width: 50,
+                        height: 50,
+                        decoration: post.createdByAvatar.isEmpty
+                            ? const BoxDecoration(color: Colors.orange, shape: BoxShape.circle)
+                            : BoxDecoration(
+                                color: Colors.black,
+                                image: DecorationImage(image: NetworkImage(post.createdByAvatar), fit: BoxFit.cover),
+                                borderRadius: BorderRadius.circular(50),
+                              ),
+                        child: post.createdByAvatar.isEmpty
+                            ? Center(
+                                child: Text(post.createdByName.substring(0, 1), style: const TextStyle(fontSize: 18)),
+                              )
+                            : const SizedBox.shrink()),
                     const Spacer0(),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
