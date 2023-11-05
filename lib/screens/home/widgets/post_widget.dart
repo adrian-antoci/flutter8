@@ -24,56 +24,26 @@ class PostCardWidget extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(10),
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  children: [
-                    Container(
-                        width: 50,
-                        height: 50,
-                        decoration: post.createdByAvatar.isEmpty
-                            ? const BoxDecoration(color: Colors.orange, shape: BoxShape.circle)
-                            : BoxDecoration(
-                                color: Colors.black,
-                                image: DecorationImage(image: NetworkImage(post.createdByAvatar), fit: BoxFit.cover),
-                                borderRadius: BorderRadius.circular(50),
-                              ),
-                        child: post.createdByAvatar.isEmpty
-                            ? Center(
-                                child: Text(post.createdByName.substring(0, 1), style: const TextStyle(fontSize: 18)),
-                              )
-                            : const SizedBox.shrink()),
-                    const Spacer0(),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          post.createdByName,
-                          style: GoogleFonts.inter()
-                              .copyWith(fontWeight: FontWeight.w900, color: Colors.white, fontSize: 14),
-                        ),
-                        Text(
-                          "${post.copyCodeCount} code copies",
-                          style: GoogleFonts.inter().copyWith(color: Colors.white, fontSize: 12),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 30,
-                  width: 100,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.all(5),
-                    ),
-                    onPressed: onCopyCode,
-                    child: const Text(
-                      "Copy code",
-                      style: TextStyle(fontSize: 14),
-                    ),
-                  ),
+                Container(
+                    width: 50,
+                    height: 50,
+                    decoration: post.createdByAvatar.isEmpty
+                        ? const BoxDecoration(color: Colors.orange, shape: BoxShape.circle)
+                        : BoxDecoration(
+                            color: Colors.black,
+                            image: DecorationImage(image: NetworkImage(post.createdByAvatar), fit: BoxFit.cover),
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                    child: post.createdByAvatar.isEmpty
+                        ? Center(
+                            child: Text(post.createdByName.substring(0, 1), style: const TextStyle(fontSize: 18)),
+                          )
+                        : const SizedBox.shrink()),
+                const Spacer0(),
+                Text(
+                  post.createdByName,
+                  style: GoogleFonts.inter().copyWith(fontWeight: FontWeight.w900, color: Colors.white, fontSize: 14),
                 ),
               ],
             ),
@@ -86,6 +56,7 @@ class PostCardWidget extends StatelessWidget {
               child: SelectionArea(
                 child: _PostContentWidget(
                   post: post,
+                  onCopyCode: onCopyCode,
                 ),
               ),
             ),
@@ -95,11 +66,13 @@ class PostCardWidget extends StatelessWidget {
 }
 
 class _PostContentWidget extends StatefulWidget {
-  final Post post;
-
   const _PostContentWidget({
     required this.post,
+    required this.onCopyCode,
   });
+
+  final Post post;
+  final Function() onCopyCode;
 
   @override
   State<_PostContentWidget> createState() => _PostContentWidgetState();
@@ -152,6 +125,16 @@ class _PostContentWidgetState extends State<_PostContentWidget> {
               _MediaControlWidget(_controller),
               Expanded(
                 child: _SliderWidget(_controller),
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                ),
+                onPressed: () => widget.onCopyCode(),
+                child: Text(
+                  "${widget.post.copyCodeCount.toString()} · Copy code",
+                  style: const TextStyle(fontSize: 14),
+                ),
               ),
             ],
           ),

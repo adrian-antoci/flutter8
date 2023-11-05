@@ -4,6 +4,7 @@ import 'package:flutter8/services/flutter8_api.dart';
 import 'package:flutter8/services/flutter8_storage.dart';
 import 'package:flutter8/services/models.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:collection/collection.dart';
 
 abstract class HomePageEvent {}
 
@@ -80,7 +81,18 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     required Flutter8API api,
   }) async {
     emit(HomePageStateSnackMessage("Code copied to clipboard!"));
-    api.incrementCopyCount(event.post);
+    var result = await api.incrementCopyCount(event.post);
+    if (result.isLeft) {
+      add(HomePageEventDataError());
+    } else {
+      event.post.copyWith(copyCodeCount: event.post.copyCodeCount + 1);
+      for (var i = 0; i < posts.length; i++) {
+        if (posts[i].id == event.post.id) {
+          posts[i] = event.post.copyWith(copyCodeCount: event.post.copyCodeCount + 1);
+        }
+      }
+      add(HomePageEventDataAvailable());
+    }
   }
 
   Future<void> _onFirstPosts({required Flutter8API api, required Flutter8Storage storage}) async {

@@ -16,17 +16,16 @@ class Post {
   final String code;
   final int copyCodeCount;
   final DateTime createdAt;
-  final bool isSeen;
 
-  Post(
-      {this.id = '',
-      required this.code,
-      required this.copyCodeCount,
-      required this.createdById,
-      required this.createdByName,
-      required this.createdByAvatar,
-      required this.createdAt,
-      this.isSeen = false});
+  Post({
+    this.id = '',
+    required this.code,
+    required this.copyCodeCount,
+    required this.createdById,
+    required this.createdByName,
+    required this.createdByAvatar,
+    required this.createdAt,
+  });
 
   static Post fromJSON(Map<String, dynamic> json) => _$PostFromJson(json);
 
