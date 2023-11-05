@@ -47,6 +47,7 @@ class _WelcomeScreenWidgetState extends State<WelcomeScreenWidget> {
               const Spacer2(),
               SvgPicture.asset('assets/logo.svg', height: 70),
               const Spacer2(),
+              const TitleText("An open source project"),
               const Spacer1(),
               const Spacer1(),
               _termsWidget(context),
@@ -76,6 +77,12 @@ class _WelcomeScreenWidgetState extends State<WelcomeScreenWidget> {
               text: 'Privacy Policy',
               style: linkStyle,
               recognizer: TapGestureRecognizer()..onTap = () => launchUrlString(dotenv.env['PRIVACY_POLICY_URL']!)),
+          const TextSpan(text: '. You can checkout this project on '),
+          TextSpan(
+              text: 'Github',
+              style: linkStyle,
+              recognizer: TapGestureRecognizer()
+                ..onTap = () => launchUrlString('https://github.com/adrian-antoci/flutter8')),
           const TextSpan(text: '.'),
         ],
       ),

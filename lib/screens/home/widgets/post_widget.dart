@@ -43,7 +43,7 @@ class PostCardWidget extends StatelessWidget {
                 const Spacer0(),
                 Text(
                   post.createdByName,
-                  style: GoogleFonts.inter().copyWith(fontWeight: FontWeight.w900, color: Colors.white, fontSize: 14),
+                  style: GoogleFonts.inter().copyWith(fontWeight: FontWeight.w900, color: Colors.white, fontSize: 16),
                 ),
               ],
             ),
