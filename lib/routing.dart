@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter8/screens/home/home_screen.dart';
 import 'package:flutter8/screens/login_screen.dart';
 import 'package:flutter8/screens/post_screen.dart';
+import 'package:flutter8/screens/profile_screen.dart';
 import 'package:flutter8/screens/welcome_screen.dart';
 import 'package:flutter8/services/firebase.dart';
 import 'package:flutter8/theme/layout.dart';
@@ -63,6 +64,13 @@ GoRouter routerConfig({
               path: '/login',
               builder: (BuildContext context, GoRouterState state) {
                 return const LoginScreenWidget();
+              },
+            ),
+            GoRoute(
+              path: '/profile',
+              builder: (BuildContext context, GoRouterState state) {
+                var user = state.extra as Map;
+                return ProfileScreenWidget(user['id'], user['name'], user['avatar']);
               },
             ),
           ],

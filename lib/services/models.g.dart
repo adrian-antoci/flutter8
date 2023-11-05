@@ -21,8 +21,6 @@ abstract class _$PostCWProxy {
 
   Post createdAt(DateTime createdAt);
 
-  Post isSeen(bool isSeen);
-
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `Post(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
   /// Usage
@@ -37,7 +35,6 @@ abstract class _$PostCWProxy {
     String? createdByName,
     String? createdByAvatar,
     DateTime? createdAt,
-    bool? isSeen,
   });
 }
 
@@ -60,16 +57,15 @@ class _$PostCWProxyImpl implements _$PostCWProxy {
   Post createdById(String createdById) => this(createdById: createdById);
 
   @override
-  Post createdByName(String createdByName) => this(createdByName: createdByName);
+  Post createdByName(String createdByName) =>
+      this(createdByName: createdByName);
 
   @override
-  Post createdByAvatar(String createdByAvatar) => this(createdByAvatar: createdByAvatar);
+  Post createdByAvatar(String createdByAvatar) =>
+      this(createdByAvatar: createdByAvatar);
 
   @override
   Post createdAt(DateTime createdAt) => this(createdAt: createdAt);
-
-  @override
-  Post isSeen(bool isSeen) => this(isSeen: isSeen);
 
   @override
 
@@ -87,7 +83,6 @@ class _$PostCWProxyImpl implements _$PostCWProxy {
     Object? createdByName = const $CopyWithPlaceholder(),
     Object? createdByAvatar = const $CopyWithPlaceholder(),
     Object? createdAt = const $CopyWithPlaceholder(),
-    Object? isSeen = const $CopyWithPlaceholder(),
   }) {
     return Post(
       id: id == const $CopyWithPlaceholder() || id == null
@@ -98,19 +93,23 @@ class _$PostCWProxyImpl implements _$PostCWProxy {
           ? _value.code
           // ignore: cast_nullable_to_non_nullable
           : code as String,
-      copyCodeCount: copyCodeCount == const $CopyWithPlaceholder() || copyCodeCount == null
-          ? _value.copyCodeCount
-          // ignore: cast_nullable_to_non_nullable
-          : copyCodeCount as int,
-      createdById: createdById == const $CopyWithPlaceholder() || createdById == null
-          ? _value.createdById
-          // ignore: cast_nullable_to_non_nullable
-          : createdById as String,
-      createdByName: createdByName == const $CopyWithPlaceholder() || createdByName == null
-          ? _value.createdByName
-          // ignore: cast_nullable_to_non_nullable
-          : createdByName as String,
-      createdByAvatar: createdByAvatar == const $CopyWithPlaceholder() || createdByAvatar == null
+      copyCodeCount:
+          copyCodeCount == const $CopyWithPlaceholder() || copyCodeCount == null
+              ? _value.copyCodeCount
+              // ignore: cast_nullable_to_non_nullable
+              : copyCodeCount as int,
+      createdById:
+          createdById == const $CopyWithPlaceholder() || createdById == null
+              ? _value.createdById
+              // ignore: cast_nullable_to_non_nullable
+              : createdById as String,
+      createdByName:
+          createdByName == const $CopyWithPlaceholder() || createdByName == null
+              ? _value.createdByName
+              // ignore: cast_nullable_to_non_nullable
+              : createdByName as String,
+      createdByAvatar: createdByAvatar == const $CopyWithPlaceholder() ||
+              createdByAvatar == null
           ? _value.createdByAvatar
           // ignore: cast_nullable_to_non_nullable
           : createdByAvatar as String,
@@ -138,7 +137,8 @@ Post _$PostFromJson(Map<String, dynamic> json) => Post(
       createdById: json['createdById'] as String,
       createdByName: json['createdByName'] as String,
       createdByAvatar: json['createdByAvatar'] as String,
-      createdAt: const FirestoreDateConverter().fromJson(json['createdAt'] as Timestamp),
+      createdAt: const FirestoreDateConverter()
+          .fromJson(json['createdAt'] as Timestamp),
     );
 
 Map<String, dynamic> _$PostToJson(Post instance) => <String, dynamic>{

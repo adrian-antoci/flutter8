@@ -80,7 +80,7 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     required HomePageEventCopyCode event,
     required Flutter8API api,
   }) async {
-    emit(HomePageStateSnackMessage("Code copied to clipboard!"));
+    emit(HomePageStateSnackMessage("Code copied to clipboard"));
     var result = await api.incrementCopyCount(event.post);
     if (result.isLeft) {
       add(HomePageEventDataError());

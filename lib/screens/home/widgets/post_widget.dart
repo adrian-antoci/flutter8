@@ -11,10 +11,12 @@ class PostCardWidget extends StatelessWidget {
     super.key,
     required this.post,
     required this.onCopyCode,
+    required this.onProfile,
   });
 
   final Post post;
   final Function() onCopyCode;
+  final Function(String id, String name, String avatar) onProfile;
 
   @override
   Widget build(BuildContext context) => Column(
@@ -25,21 +27,11 @@ class PostCardWidget extends StatelessWidget {
             padding: const EdgeInsets.all(10),
             child: Row(
               children: [
-                Container(
-                    width: 50,
-                    height: 50,
-                    decoration: post.createdByAvatar.isEmpty
-                        ? const BoxDecoration(color: Colors.orange, shape: BoxShape.circle)
-                        : BoxDecoration(
-                            color: Colors.black,
-                            image: DecorationImage(image: NetworkImage(post.createdByAvatar), fit: BoxFit.cover),
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                    child: post.createdByAvatar.isEmpty
-                        ? Center(
-                            child: Text(post.createdByName.substring(0, 1), style: const TextStyle(fontSize: 18)),
-                          )
-                        : const SizedBox.shrink()),
+                InkWell(
+                  onTap: () => onProfile(post.id, post.createdByName, post.createdByAvatar),
+                  customBorder: const CircleBorder(),
+                  child: _profileSection(),
+                ),
                 const Spacer0(),
                 Text(
                   post.createdByName,
@@ -63,6 +55,22 @@ class PostCardWidget extends StatelessWidget {
           ),
         ],
       );
+
+  Widget _profileSection() => Container(
+      width: 50,
+      height: 50,
+      decoration: post.createdByAvatar.isEmpty
+          ? const BoxDecoration(color: Colors.orange, shape: BoxShape.circle)
+          : BoxDecoration(
+              color: Colors.black,
+              image: DecorationImage(image: NetworkImage(post.createdByAvatar), fit: BoxFit.cover),
+              borderRadius: BorderRadius.circular(50),
+            ),
+      child: post.createdByAvatar.isEmpty
+          ? Center(
+              child: Text(post.createdByName.substring(0, 1), style: const TextStyle(fontSize: 18)),
+            )
+          : const SizedBox.shrink());
 }
 
 class _PostContentWidget extends StatefulWidget {

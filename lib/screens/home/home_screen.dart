@@ -34,6 +34,8 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
   final HomePageBloc _bloc = HomePageBloc(Flutter8APIImpl(), Flutter8StorageImpl());
   final ConfettiController _confettiController = ConfettiController(duration: const Duration(seconds: 1));
 
+  bool get isLoggedIn => FirebaseAuth.instance.currentUser != null;
+
   @override
   void initState() {
     widget.nextPageController.addListener(
@@ -48,6 +50,12 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
     super.dispose();
   }
 
+  void _goToMyProfile() => context.push("/profile", extra: {
+        'id': FirebaseAuth.instance.currentUser!.uid,
+        'name': FirebaseAuth.instance.currentUser!.displayName,
+        'avatar': FirebaseAuth.instance.currentUser!.photoURL,
+      });
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -59,29 +67,62 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
             title: SvgPicture.asset('assets/logo.svg', height: 17),
             actions: [
               TextButton(
-                  onPressed: () {
-                    try {
-                      if (FirebaseAuth.instance.currentUser != null) {
-                        context.push("/post").then(_handleNewPost);
-                        return;
-                      }
-                    } catch (ex) {}
+                onPressed: () {
+                  try {
+                    if (FirebaseAuth.instance.currentUser != null) {
+                      context.push("/post").then(_handleNewPost);
+                      return;
+                    }
+                  } catch (ex) {}
+                  context.push("/login").then((_) {
+                    if (isLoggedIn) {
+                      context.push("/post").then(_handleNewPost);
+                      _bloc.add(HomePageEventOnLogin());
+                    }
+                  });
+                },
+                child: const Row(
+                  children: [
+                    Icon(Icons.add),
+                    Text(
+                      "Post code",
+                      style: TextStyle(fontWeight: FontWeight.w900),
+                    ),
+                  ],
+                ),
+              ),
+              IconButton(
+                onPressed: () {
+                  if (isLoggedIn) {
+                    _goToMyProfile();
+                  } else {
                     context.push("/login").then((_) {
-                      if (FirebaseAuth.instance.currentUser != null) {
-                        context.push("/post").then(_handleNewPost);
-                        _bloc.add(HomePageEventOnLogin());
+                      if (isLoggedIn) {
+                        _goToMyProfile();
                       }
                     });
-                  },
-                  child: const Row(
-                    children: [
-                      Icon(Icons.add),
-                      Text(
-                        "Post code",
-                        style: TextStyle(fontWeight: FontWeight.w900),
-                      )
-                    ],
-                  ))
+                  }
+                },
+                icon: Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.5),
+                    image: isLoggedIn && FirebaseAuth.instance.currentUser!.photoURL != null
+                        ? DecorationImage(
+                            image: NetworkImage(FirebaseAuth.instance.currentUser!.photoURL!), fit: BoxFit.cover)
+                        : null,
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  child: isLoggedIn
+                      ? null
+                      : const Icon(
+                          Icons.person,
+                          color: Colors.white,
+                        ),
+                ),
+              ),
+              const Spacer0(),
             ],
             centerTitle: false,
           ),
@@ -118,6 +159,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                           return PostCardWidget(
                             post: post,
                             onCopyCode: () => _onCopyCode(context, post),
+                            onProfile: _onProfile,
                           );
                         },
                       );
@@ -153,6 +195,12 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
     Clipboard.setData(ClipboardData(text: post.code));
     _bloc.add(HomePageEventCopyCode(post));
   }
+
+  void _onProfile(String id, String name, String avatar) => context.push("/profile", extra: {
+        'id': id,
+        'name': name,
+        'avatar': avatar,
+      });
 
   void _snackMessage(BuildContext context, String message) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
