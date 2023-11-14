@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter8/screens/home/home_screen.dart';
 import 'package:flutter8/screens/login_screen.dart';
 import 'package:flutter8/screens/post_screen.dart';
-import 'package:flutter8/screens/profile_screen.dart';
+import 'package:flutter8/screens/profile/profile_screen.dart';
 import 'package:flutter8/screens/welcome_screen.dart';
 import 'package:flutter8/services/firebase.dart';
 import 'package:flutter8/theme/layout.dart';

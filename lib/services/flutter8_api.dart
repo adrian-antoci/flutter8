@@ -8,4 +8,12 @@ abstract class Flutter8API {
   Future<Either<APIError, Post>> getPost(String id);
 
   Future<Either<APIError, bool>> incrementCopyCount(Post post);
+
+  Future<Either<APIError, bool>> addPostToProfile(Post post);
+
+  Future<Either<APIError, String>> createPost(Post post);
+
+  Future<Either<APIError, List<Post>>> listCodeCopies(String user);
+
+  Future<Either<APIError, List<Post>>> listCreatedByUser(String user);
 }

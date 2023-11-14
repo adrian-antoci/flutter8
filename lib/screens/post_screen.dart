@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter8/services/flutter8_api_impl.dart';
 import 'package:flutter8/theme/code_highlighter.dart';
 import 'package:flutter8/services/models.dart';
 import 'package:flutter8/theme/colors.dart';
@@ -15,7 +16,7 @@ class PostScreenWidget extends StatefulWidget {
 
 class _PostScreenWidgetState extends State<PostScreenWidget> {
   late final _textController = _CustomTextController();
-  final CollectionReference posts = FirebaseFirestore.instance.collection('posts');
+
   bool _isPosting = false;
 
   @override
@@ -36,9 +37,10 @@ class _PostScreenWidgetState extends State<PostScreenWidget> {
         createdByAvatar: user.photoURL ?? "",
         createdByName: user.displayName ?? "No name",
         createdAt: DateTime.now());
-    var result = await posts.add(post.toJSON());
-    if (mounted) {
-      context.pop(post.copyWith(id: result.id));
+
+    var result = await Flutter8APIImpl().createPost(post);
+    if (result.isRight && mounted) {
+      context.pop(post.copyWith(id: result.right));
     }
   }
 

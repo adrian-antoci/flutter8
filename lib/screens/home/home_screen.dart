@@ -192,7 +192,6 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
   }
 
   void _onCopyCode(BuildContext context, Post post) {
-    Clipboard.setData(ClipboardData(text: post.code));
     _bloc.add(HomePageEventCopyCode(post));
   }
 

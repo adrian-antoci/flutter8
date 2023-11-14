@@ -72,18 +72,18 @@ class _WelcomeScreenWidgetState extends State<WelcomeScreenWidget> {
       text: TextSpan(
         style: normalStye,
         children: <TextSpan>[
-          const TextSpan(text: 'Hi! By clicking Continue, you agree that have read and agree with our '),
-          TextSpan(
-              text: 'Privacy Policy',
-              style: linkStyle,
-              recognizer: TapGestureRecognizer()..onTap = () => launchUrlString(dotenv.env['PRIVACY_POLICY_URL']!)),
-          const TextSpan(text: '. You can checkout this project on '),
+          const TextSpan(text: 'Checkout this project on '),
           TextSpan(
               text: 'Github',
               style: linkStyle,
               recognizer: TapGestureRecognizer()
                 ..onTap = () => launchUrlString('https://github.com/adrian-antoci/flutter8')),
-          const TextSpan(text: '.'),
+          const TextSpan(text: '.\n\nBy clicking Continue, you agree that have read and agree with the '),
+          TextSpan(
+              text: 'Privacy Policy',
+              style: linkStyle,
+              recognizer: TapGestureRecognizer()..onTap = () => launchUrlString(dotenv.env['PRIVACY_POLICY_URL']!)),
+          const TextSpan(text: '. '),
         ],
       ),
     );

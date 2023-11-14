@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/services.dart';
 import 'package:queue/queue.dart';
 import 'package:flutter8/services/flutter8_api.dart';
 import 'package:flutter8/services/flutter8_storage.dart';
@@ -80,9 +81,17 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     required HomePageEventCopyCode event,
     required Flutter8API api,
   }) async {
+    Clipboard.setData(ClipboardData(text: event.post.code));
     emit(HomePageStateSnackMessage("Code copied to clipboard"));
-    var result = await api.incrementCopyCount(event.post);
-    if (result.isLeft) {
+
+    var results = await Future.wait([
+      api.incrementCopyCount(event.post),
+      api.addPostToProfile(event.post),
+    ]);
+
+    var allSuccessful = results.every((element) => element.isRight);
+
+    if (!allSuccessful) {
       add(HomePageEventDataError());
     } else {
       event.post.copyWith(copyCodeCount: event.post.copyCodeCount + 1);
@@ -114,6 +123,7 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
   }
 
   Future<void> _updateUIAndQueryMore({required List<Post> newPosts, required Flutter8API api}) async {
+    if (isClosed) return;
     posts.addAll(newPosts);
     add(HomePageEventDataAvailable());
 
