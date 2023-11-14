@@ -76,7 +76,7 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
             current is ProfilePageStateDataAvailable || current is ProfilePageStateDataLoading,
         builder: (context, state) {
           if (state is ProfilePageStateDataAvailable) {
-            return Expanded(child: _PostsGridWidget(_bloc.posts));
+            return _PostsGridWidget(_bloc.posts);
           }
           return const SizedBox.shrink();
         },
@@ -115,29 +115,31 @@ class _PostsGridWidgetState extends State<_PostsGridWidget> {
           padding: EdgeInsets.all(25),
           child: Text("No posts"),
         )
-      : MediaQuery.removePadding(
-          context: context,
-          removeTop: true,
-          child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-              ),
-              itemCount: widget.posts.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Container(
-                  margin: const EdgeInsets.all(5),
-                  padding: const EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                    color: lightBackgroundColor,
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(5),
+      : Expanded(
+          child: MediaQuery.removePadding(
+            context: context,
+            removeTop: true,
+            child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                ),
+                itemCount: widget.posts.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Container(
+                    margin: const EdgeInsets.all(5),
+                    padding: const EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                      color: lightBackgroundColor,
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(5),
+                      ),
                     ),
-                  ),
-                  child: Text.rich(
-                    CodeHighlighter().highlight(widget.posts[index].code),
-                    style: GoogleFonts.roboto(height: 1.5, fontSize: 10),
-                  ),
-                );
-              }),
+                    child: Text.rich(
+                      CodeHighlighter().highlight(widget.posts[index].code),
+                      style: GoogleFonts.roboto(height: 1.5, fontSize: 10),
+                    ),
+                  );
+                }),
+          ),
         );
 }
