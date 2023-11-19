@@ -3,6 +3,7 @@
 [![Build and deploy to Firebase Hosting](https://github.com/adrian-antoci/flutter8/actions/workflows/firebase-deploy-main.yml/badge.svg)](https://github.com/adrian-antoci/flutter8/actions/workflows/firebase-deploy-main.yml)
 
 Flutter8 is an open-source platform aimed at learning Flutter in small chunks of code.
+![](./preview.gif)
 
 ## Try it
 
